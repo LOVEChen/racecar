@@ -1,4 +1,4 @@
-joy_node:
+joy_node:    #此文件主要作为joy_teleop.py的输入
   deadzone: 0.01
   autorepeat_rate: 20
   coalesce_interval: 0.01
@@ -6,11 +6,11 @@ joy_node:
 teleop:
   # Default mode - Stop for safety
   default:
-    type: topic
+    type: topic           #需要发布的主题，类型和主题名字分别由message_type和topic_name定义
     is_default: true
     message_type: ackermann_msgs/AckermannDriveStamped
     topic_name: low_level/ackermann_cmd_mux/input/teleop
-    message_value:
+    message_value:        #如定义message_valiue,则用target=value作为主题的内容发布
       -
         target: drive.speed
         value: 0.0
@@ -23,8 +23,8 @@ teleop:
     type: topic
     message_type: ackermann_msgs/AckermannDriveStamped
     topic_name: low_level/ackermann_cmd_mux/input/teleop
-    deadman_buttons: [4]
-    axis_mappings:
+    deadman_buttons: [4]  #需要该按键按下才发布指定的消息主题
+    axis_mappings:        #如定义axis_mappings,则target=axis*scale+offset
       -
         axis: 1
         target: drive.speed

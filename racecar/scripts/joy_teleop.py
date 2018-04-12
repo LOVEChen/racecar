@@ -31,7 +31,7 @@ class JoyTeleop:
     See config/joy_teleop.yaml for an example.
     """
     def __init__(self):
-        if not rospy.has_param("teleop"):
+        if not rospy.has_param("teleop"):   #@racecar/racecar/config/racecar-v2/joy_teleop.yaml line:6 define teleop
             rospy.logfatal("no configuration was found, taking node down")
             raise JoyTeleopException("no config")
 
@@ -48,7 +48,7 @@ class JoyTeleop:
 
         teleop_cfg = rospy.get_param("teleop")
 
-        for i in teleop_cfg:
+        for i in teleop_cfg:    #i is key of dict (teleop_cfg),  [default, human_control, autonomous_control]
             if i in self.command_list:
                 rospy.logerr("command {} was duplicated".format(i))
                 continue
@@ -62,7 +62,7 @@ class JoyTeleop:
                 self.register_service(i, teleop_cfg[i])
             else:
                 rospy.logerr("unknown type '%s' for command '%s'", action_type, i)
-
+            rospy.loginfo("@joy_teleop.py type '%s' for command '%s'", action_type, i)
         # Don't subscribe until everything has been initialized.
         rospy.Subscriber('joy', sensor_msgs.msg.Joy, self.joy_callback)
 
@@ -72,8 +72,7 @@ class JoyTeleop:
     def joy_callback(self, data):
         try:
             for c in self.command_list:
-                if self.match_command(c, data.buttons):
-                    self.run_command(c, data)
+                if self.match_command(c, data.buttons): #data订阅joy的消息，data.buttos是一个列表
                     # Only run 1 command at a time
                     break
         except JoyTeleopException as e:
@@ -145,7 +144,7 @@ class JoyTeleop:
         """Find a command matching a joystick configuration"""
         # Buttons is a vector of the shape [0,1,0,1....
         # Turn it into a vector of form [1, 3...
-        button_indexes = np.argwhere(buttons).flatten()
+        button_indexes = np.argwhere(buttons).flatten() #上面注释说的很明白，[0,1,0,1 ...]->[1,3...]
 
         # Check if the pressed buttons match the commands exactly.
         buttons_match = np.array_equal(self.command_list[c]['buttons'], button_indexes)
@@ -161,7 +160,7 @@ class JoyTeleop:
         # Return the final result.
         return (buttons_match) or (not any_commands_matched and self.command_list[c]['is_default'])
 
-    def add_command(self, name, command):
+    def add_command(self, name, command):  #name is key, command is teleop_cfg[key]
         """Add a command to the command list"""
         # Check if this is a default command
         if 'is_default' not in command:
