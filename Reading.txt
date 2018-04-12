@@ -1,0 +1,106 @@
+1. 
+
+@racecar/racecar/launch/includes/common/joy_teleop.launch.xml中
+
+<node pkg="racecar" type="joy_teleop.py" name="joy_teleop" />
+node的三要素：pkg,type,name
+
+2. launch文件的包含关系体现node的树结构关系
+
+racecar/racecar/launch/teleop.launch
+	 <include file="$(find racecar)/launch/includes/$(arg racecar_version)-teleop.launch.xml">
+	 
+	 racecar/racecar/launch/includes/racecar-v2-teleop.launch.xml
+	 <group ns="vesc">
+		<include file="$(find racecar)/launch/includes/common/joy_teleop.launch.xml" >
+		...
+		<include file="$(find racecar)/launch/mux.launch" />
+		...
+		<include file="$(find racecar)/launch/includes/$(arg racecar_version)/vesc.launch.xml" >
+	 </group>
+	
+	 使得后面的node都在vesc的目录下！
+	 racecar/racecar/launch/includes/common/joy_teleop.launch.xml
+
+	<!-- node: /vesc/joy_node (joy/joy_node) ; rosnode info /vesc/joy_node-->
+	<node pkg="joy" type="joy_node" name="joy_node" />
+	<!-- node: /vesc/joy_teleop (racecar/joy_teleop.py) ; rosnode info /vesc/joy_teleop-->
+	<node pkg="racecar" type="joy_teleop.py" name="joy_teleop" />	
+
+
+3.
+	rosparam load  ~/catkin_ws/src/racecar/racecar/config/racecar-v2/joy_teleop.yaml
+
+python
+
+
+
+import importlib
+
+import rospy
+import genpy.message
+from rospy import ROSException
+import sensor_msgs.msg
+import actionlib
+import rostopic
+import rosservice
+from threading import Thread
+from rosservice import ROSServiceException
+
+import numpy as np
+
+rospy.has_param("teleop")
+
+#you must get True!
+
+
+teleop_cfg = rospy.get_param("teleop")
+>>> teleop_cfg
+{
+
+'default': {'is_default': True, 'type': 'topic', 'topic_name': 'low_level/ackermann_cmd_mux/input/teleop', 'message_type': 'ackermann_msgs/AckermannDriveStamped', 'message_value': [{'target': 'drive.speed', 'value': 0.0}, {'target': 'drive.steering_angle', 'value': 0.0}]}, 
+
+
+'human_control': {'type': 'topic', 'axis_mappings': [{'scale': 2.0, 'axis': 1, 'target': 'drive.speed', 'offset': 0.0}, {'scale': 0.34, 'axis': 3, 'target': 'drive.steering_angle', 'offset': 0.0}], 'topic_name': 'low_level/ackermann_cmd_mux/input/teleop', 'message_type': 'ackermann_msgs/AckermannDriveStamped', 'deadman_buttons': [4]}, 
+
+'autonomous_control': {'type': 'topic', 'topic_name': '/dev/null', 'message_type': 'std_msgs/Int8', 'message_value': [{'target': 'data', 'value': 0}], 'deadman_buttons': [5]}
+
+}
+
+
+Run flollwing code:
+
+for i in teleop_cfg:
+...     print i
+... 
+
+Result:
+
+default
+human_control
+autonomous_control
+
+
+    def add_command(self, name, command):			#
+        """Add a command to the command list"""
+        # Check if this is a default command
+        if 'is_default' not in command:
+            command['is_default'] = False
+        
+        if command['type'] == 'topic':
+            if 'deadman_buttons' not in command:
+                command['deadman_buttons'] = []
+            command['buttons'] = command['deadman_buttons']
+        elif command['type'] == 'action':
+            if 'action_goal' not in command:
+                command['action_goal'] = {}
+        elif command['type'] == 'service':
+            if 'service_request' not in command:
+                command['service_request'] = {}
+        self.command_list[name] = command
+
+
+4. joy_teleop.py和joy_teleop.yam对应着review
+
+
+
