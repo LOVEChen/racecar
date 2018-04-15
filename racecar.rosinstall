@@ -1,3 +1,23 @@
+#http://wiki.ros.org/rosinstall
+#http://docs.ros.org/independent/api/rosinstall/html/rosinstall_file_format.html
+#http://docs.ros.org/independent/api/vcstools/html/
+#http://www.ros.org/reps/rep-0126.html
+
+# The rosinstall file format is a yaml document. It is a list of top level dictionaries. 
+# The top level valid keys are svn, hg, git, bzr, other, setup-file.
+# Each key represents a form of version control system to use. These are supported from the vcstools module.
+# 下面内容的意思 是从指定的URI地方CLONE（GIT）指定的版本的源代码到指定的本地目录（local-name）
+# 	version:指定版本
+# 	local-name: 可以是绝对或相对路径，这里是相对路径
+# 	uri:git的连接
+
+# sudo apt-get install python-rosinstall
+# OR
+# sudo pip install -U rosinstall
+
+# he current rosinstall command line interface (CLI) syntax is as follows:
+# 	rosinstall [OPTIONS] INSTALL_PATH [ROSINSTALL FILES OR DIRECTORIES]*
+
 - setup-file: {local-name: /opt/ros/kinetic/setup.sh}
 - git: {local-name: src/racecar,         version: master,        uri: 'https://github.com/mit-racecar/racecar.git'}
 - git: {local-name: src/vesc,            version: master,        uri: 'https://github.com/mit-racecar/vesc.git'}
