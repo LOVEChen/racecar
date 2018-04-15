@@ -23,7 +23,7 @@ vesc_to_odom/publish_tf: false
 wheelbase: .25
 
 vesc_driver:
-  port: /dev/ttyACM0
+  port: /dev/ros_vesc   #VESC Serialport /dev/ttyACM0
   duty_cycle_min: 0.0
   duty_cycle_max: 0.0
   current_min: 0.0
@@ -31,7 +31,7 @@ vesc_driver:
   brake_min: -20000.0
   brake_max: 200000.0
   speed_min: -3250
-  speed_max: 3250
+  speed_max: 3250	#MAX SPEED SETTING
   position_min: 0.0
   position_max: 0.0
   servo_min: 0.15
