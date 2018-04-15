@@ -3,11 +3,11 @@
   <arg name="racecar_version" />
   <arg name="joy_teleop_config"
        default="$(find racecar)/config/$(arg racecar_version)/joy_teleop.yaml" />
-
+  <!-- load racecar/racecar/config/racecar-v2/joy_teleop.yaml file as rosparam -->
   <rosparam file="$(arg joy_teleop_config)" command="load" />
-
+  <!-- node: /vesc/joy_node (joy/joy_node) ; rosnode info /vesc/joy_node-->
   <node pkg="joy" type="joy_node" name="joy_node" />
-
+  <!-- node: /vesc/joy_teleop (racecar/joy_teleop.py) ; rosnode info /vesc/joy_teleop-->
   <node pkg="racecar" type="joy_teleop.py" name="joy_teleop" />
-
+  rosnode list
 </launch>
