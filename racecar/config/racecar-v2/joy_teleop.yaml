@@ -26,12 +26,12 @@ teleop:
     deadman_buttons: [4]  #需要该按键按下才发布指定的消息主题
     axis_mappings:        #如定义axis_mappings,则target=axis*scale+offset
       -
-        axis: 1			     #左手摇杆
+        axis: 1           #左手摇杆
         target: drive.speed
         scale: 2.0                   # joystick will command plus or minus 2 meters / second
         offset: 0.0
       -
-        axis: 2			     #右手摇杆
+        axis: 2           #右手摇杆
         target: drive.steering_angle
         scale: 0.34                  # joystick will command plus or minus ~20 degrees steering angle
         offset: 0.0
