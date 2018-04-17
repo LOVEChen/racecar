@@ -74,7 +74,8 @@ class JoyTeleop:
     def joy_callback(self, data):
         try:
             for c in self.command_list:
-                if self.match_command(c, data.buttons): #data订阅joy的消息,data.buttos是一个列表 
+                if self.match_command(c, data.buttons): #data订阅joy的消息,data.buttos是一个列表
+                    self.run_command(c, data)		
                     # Only run 1 command at a time
                     break
         except JoyTeleopException as e:
