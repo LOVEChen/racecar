@@ -1,3 +1,6 @@
+# 与racecar.rosinsatll略有不同的，以racecar-simulator替代zed_wrapper
+# 其它语法参考racecar.rosinsall注释说明
+
 - setup-file: {local-name: /opt/ros/kinetic/setup.sh}
 - git: {local-name: src/racecar,         version: master,        uri: 'https://github.com/mit-racecar/racecar.git'}
 - git: {local-name: src/vesc,            version: master,        uri: 'https://github.com/mit-racecar/vesc.git'}
