@@ -211,7 +211,6 @@ class JoyTeleop:
     def run_topic(self, c, joy_state):
         cmd = self.command_list[c]
         msg = self.get_message_type(cmd['message_type'])()
-
         if 'message_value' in cmd:
             for param in cmd['message_value']:
                 self.set_member(msg, param['target'], param['value'])
@@ -223,6 +222,7 @@ class JoyTeleop:
                   val = 0.0
                 else:
                   val = joy_state.axes[mapping['axis']] * mapping.get('scale', 1.0) + mapping.get('offset', 0.0)
+		  rospy.loginfo("buttons: 4:%d 12:%d 17:%d" ,  joy_state.buttons[4], joy_state.buttons[12], joy_state.buttons[17])
 
                 self.set_member(msg, mapping['target'], val)
                 
@@ -290,7 +290,7 @@ class JoyTeleop:
 
 if __name__ == "__main__":
     try:
-        rospy.init_node('joy_teleop')
+        rospy.init_node('joy_teleop', log_level=rospy.DEBUG)
         jt = JoyTeleop()
         rospy.spin()
     except JoyTeleopException:

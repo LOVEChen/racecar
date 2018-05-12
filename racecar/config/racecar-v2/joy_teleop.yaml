@@ -23,15 +23,44 @@ teleop:
     type: topic
     message_type: ackermann_msgs/AckermannDriveStamped
     topic_name: low_level/ackermann_cmd_mux/input/teleop
-    deadman_buttons: [4]  #需要该按键按下才发布指定的消息主题
+    deadman_buttons: []  #需要该按键按下才发布指定的消息主题
     axis_mappings:        #如定义axis_mappings,则target=axis*scale+offset
       -
-        axis: 1           #左手摇杆
-        target: drive.speed
-        scale: 2.0                   # joystick will command plus or minus 2 meters / second
+        axis: 0           #teleop (LR) axis:2; G29 Streer is axis:0
+        target: drive.steering_angle
+        scale: 0.34                  # joystick will command plus or minus ~20 degrees steering angle
         offset: 0.0
+
+  human_control_D:
+    type: topic
+    message_type: ackermann_msgs/AckermannDriveStamped
+    topic_name: low_level/ackermann_cmd_mux/input/teleop
+    deadman_buttons: [12]  
+    axis_mappings:        #如定义axis_mappings,则target=axis*scale+offset
       -
-        axis: 2           #右手摇杆
+        axis: 2           #teleop (FB) axis:0; G29 accelarator pedal is axis:2
+        target: drive.speed
+        scale:  0.5                   # joystick will command plus or minus 2 meters / second
+        offset: 0.5
+      -
+        axis: 0           #teleop (LR) axis:2; G29 Streer is axis:0
+        target: drive.steering_angle
+        scale: 0.34                  # joystick will command plus or minus ~20 degrees steering angle
+        offset: 0.0
+
+  human_control_R:
+    type: topic
+    message_type: ackermann_msgs/AckermannDriveStamped
+    topic_name: low_level/ackermann_cmd_mux/input/teleop
+    deadman_buttons: [17]  
+    axis_mappings:        #如定义axis_mappings,则target=axis*scale+offset
+      -
+        axis: 2           #teleop (FB) axis:0; G29 accelarator pedal is axis:2
+        target: drive.speed
+        scale:  -0.5                   # joystick will command plus or minus 2 meters / second
+        offset: -0.5
+      -
+        axis: 0           #teleop (LR) axis:2; G29 Streer is axis:0
         target: drive.steering_angle
         scale: 0.34                  # joystick will command plus or minus ~20 degrees steering angle
         offset: 0.0
@@ -45,6 +74,5 @@ teleop:
     topic_name: /dev/null
     deadman_buttons: [5]
     message_value:
-      -
         target: data
         value: 0
