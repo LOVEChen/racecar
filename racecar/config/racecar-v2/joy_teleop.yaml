@@ -26,6 +26,11 @@ teleop:
     deadman_buttons: []  #需要该按键按下才发布指定的消息主题
     axis_mappings:        #如定义axis_mappings,则target=axis*scale+offset
       -
+        axis: 2           #teleop (FB) axis:0; G29 accelarator pedal is axis:2
+        target: drive.speed
+        scale:  0.0                 # joystick will command plus or minus 2 meters / second
+        offset: 0.0
+      -
         axis: 0           #teleop (LR) axis:2; G29 Streer is axis:0
         target: drive.steering_angle
         scale: 0.34                  # joystick will command plus or minus ~20 degrees steering angle
