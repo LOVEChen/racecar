@@ -1,6 +1,6 @@
 
 # erpm (electrical rpm) = speed_to_erpm_gain * speed (meters / second) + speed_to_erpm_offset
-speed_to_erpm_gain: 25000
+speed_to_erpm_gain: 3500
 speed_to_erpm_offset: 0.0
 
 tachometer_ticks_to_meters_gain: 0.00225
@@ -30,8 +30,8 @@ vesc_driver:
   current_max: 20.0
   brake_min: -20000.0
   brake_max: 200000.0
-  speed_min: -3250
-  speed_max: 32500       #MAX SPEED SETTING
+  speed_min: -25000
+  speed_max: 25000       #MAX SPEED SETTING
   position_min: 0.0
   position_max: 0.0
   servo_min: 0.15
