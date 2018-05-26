@@ -65,10 +65,10 @@ class InterpolateThrottle:
         smoothed_rpm = self.last_rpm + clipped_delta
         self.last_rpm = smoothed_rpm
 	self.duty = smoothed_rpm/self.max_rpm        
-        # print self.desired_rpm, smoothed_rpm
-        #self.rpm_output.publish(Float64(smoothed_rpm))
-	self.duty_output.publish(Float64(self.duty))
-	rospy.loginfo("duty:%f,%f,%f", self.duty,self.max_rpm,self.duty)
+        print self.desired_rpm, smoothed_rpm
+        self.rpm_output.publish(Float64(smoothed_rpm))
+	#self.duty_output.publish(Float64(self.duty))
+	#rospy.loginfo("duty:%f,%f,%f", self.duty,self.max_rpm,self.duty)
             
     def _process_throttle_command(self,msg):
         input_rpm = msg.data
