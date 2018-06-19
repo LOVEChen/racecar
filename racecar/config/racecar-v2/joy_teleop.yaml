@@ -50,7 +50,7 @@ teleop:
       -
         axis: 0           #teleop (LR) axis:2; G29 Streer is axis:0
         target: drive.steering_angle
-        scale: 0.34                  # joystick will command plus or minus ~20 degrees steering angle
+        scale: 0.64                  # joystick will command plus or minus ~20 degrees steering angle
         offset: 0.0
 
   human_control_R:
@@ -67,7 +67,7 @@ teleop:
       -
         axis: 0           #teleop (LR) axis:2; G29 Streer is axis:0
         target: drive.steering_angle
-        scale: 0.34                  # joystick will command plus or minus ~20 degrees steering angle
+        scale: 0.64                  # joystick will command plus or minus ~20 degrees steering angle
         offset: 0.0
 
   # Enable autonomous control by pressing right bumper
