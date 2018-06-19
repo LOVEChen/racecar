@@ -72,13 +72,10 @@ class InterpolateThrottle:
     def _process_throttle_command(self,msg):
         input_rpm = msg.data
         # Do some sanity clipping
-           
-        #input_rpm = min(max(input_rpm, self.min_rpm), self.max_rpm)
-        if input_rpm<2500:
-		input_rpm=0
 
+	if (-2500.0 < input_rpm < 2500.0):
+        	input_rpm=0
         input_rpm = min(max(input_rpm, self.min_rpm), self.max_rpm)
-
 
         self.desired_rpm = input_rpm
 
