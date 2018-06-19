@@ -73,7 +73,7 @@ class InterpolateThrottle:
         input_rpm = msg.data
         # Do some sanity clipping
 
-	if (-2500.0 < input_rpm < 2500.0):
+	if (-900.0 < input_rpm < 900.0):
         	input_rpm=0
         input_rpm = min(max(input_rpm, self.min_rpm), self.max_rpm)
 
